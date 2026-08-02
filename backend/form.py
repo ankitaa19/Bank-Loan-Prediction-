@@ -89,7 +89,7 @@ def loan_application_form():
 
             previous_loan = st.selectbox(
                 "Previous Loan Taken",
-                ["Yes", "No"]
+                ["No", "Yes"]
             )
 
             property_area = st.selectbox(
