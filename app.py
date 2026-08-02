@@ -30,30 +30,38 @@ if submit:
 
     st.divider()
 
-    st.subheader("Prediction")
+st.divider()
 
-    if prediction == 1:
+st.subheader("Prediction")
 
-        st.success("✅ Loan Approved")
+if prediction == 1:
+    confidence = probability[1]
 
-        st.metric(
-            "Confidence",
-            f"{probability[1] * 100:.2f}%"
-        )
+    st.success("✅ Loan Approved")
 
-        st.info(
-            "The application satisfies the model's criteria for loan approval."
-        )
+    st.metric(
+        "Confidence",
+        f"{confidence * 100:.2f}%"
+    )
 
-    else:
+    st.progress(confidence)
 
-        st.error("❌ Loan Rejected")
+    st.info(
+        "The application satisfies the model's criteria for loan approval."
+    )
 
-        st.metric(
-            "Confidence",
-            f"{probability[0] * 100:.2f}%"
-        )
+else:
+    confidence = probability[0]
 
-        st.warning(
-            "The application does not satisfy the model's approval criteria."
-        )
+    st.error("❌ Loan Rejected")
+
+    st.metric(
+        "Confidence",
+        f"{confidence * 100:.2f}%"
+    )
+
+    st.progress(confidence)
+
+    st.warning(
+        "The application does not satisfy the model's approval criteria."
+    )
