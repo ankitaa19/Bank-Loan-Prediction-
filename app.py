@@ -1,26 +1,30 @@
 import streamlit as st
 
+from backend.predictor import LoanPredictor
+from backend.preprocessing import LoanPreprocessor
+from backend.form import loan_application_form
+
 st.set_page_config(
     page_title="Bank Loan Prediction",
     page_icon="🏦",
     layout="wide"
 )
 
-st.title("🏦 Bank Loan Prediction System")
+st.title("🏦 Bank Loan Prediction")
 
-st.write("Welcome to the Bank Loan Prediction application.")
+predictor = LoanPredictor()
+preprocessor = LoanPreprocessor()
 
-st.header("Applicant Details")
 
-col1, col2 = st.columns(2)
+st.success("Model Loaded Successfully")
 
-with col1:
-    st.text_input("Applicant Name")
-    st.number_input("Applicant Income", min_value=0)
+submit, user_data = loan_application_form()
 
-with col2:
-    st.text_input("Loan Purpose")
-    st.number_input("Loan Amount", min_value=0)
+if submit:
 
-if st.button("Predict"):
-    st.success("Prediction will appear here.")
+    st.success("Form Submitted Successfully!")
+
+    model_input = preprocessor.transform(user_data)
+
+    st.write("### Data Sent To Model")
+    st.dataframe(model_input)
