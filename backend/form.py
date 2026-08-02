@@ -3,11 +3,17 @@ import streamlit as st
 
 def loan_application_form():
 
-    st.header("📝 Loan Application Form")
+    st.markdown(
+        '<h2><i class="fa-solid fa-file-signature"></i> Loan Application Form</h2>',
+        unsafe_allow_html=True
+    )
 
     with st.form("loan_form"):
 
-        st.subheader("👤 Personal Information")
+        st.markdown(
+            '<h3><i class="fa-solid fa-user"></i> Personal Information</h3>',
+            unsafe_allow_html=True
+        )
 
         col1, col2 = st.columns(2)
 
@@ -48,7 +54,10 @@ def loan_application_form():
 
         st.divider()
 
-        st.subheader("💰 Financial Information")
+        st.markdown(
+            '<h3><i class="fa-solid fa-wallet"></i> Financial Information</h3>',
+            unsafe_allow_html=True
+        )
 
         col3, col4 = st.columns(2)
 
@@ -81,7 +90,10 @@ def loan_application_form():
 
         st.divider()
 
-        st.subheader("🏠 Property Details")
+        st.markdown(
+            '<h3><i class="fa-solid fa-house"></i> Property Details</h3>',
+            unsafe_allow_html=True
+        )
 
         col5, col6 = st.columns(2)
 
@@ -101,11 +113,11 @@ def loan_application_form():
 
             customer_bandwidth = st.selectbox(
                 "Customer Bandwidth",
-                ["Good", "Average", "Poor"]
+                ["Good", "Medium", "Bad"]
             )
 
         submit = st.form_submit_button(
-            "🔍 Predict Loan"
+            "Predict Loan"
         )
 
     return submit, {
