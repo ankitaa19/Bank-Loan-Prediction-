@@ -26,5 +26,34 @@ if submit:
 
     model_input = preprocessor.transform(user_data)
 
-    st.write("### Data Sent To Model")
-    st.dataframe(model_input)
+    prediction, probability = predictor.predict(model_input)
+
+    st.divider()
+
+    st.subheader("Prediction")
+
+    if prediction == 1:
+
+        st.success("✅ Loan Approved")
+
+        st.metric(
+            "Confidence",
+            f"{probability[1] * 100:.2f}%"
+        )
+
+        st.info(
+            "The application satisfies the model's criteria for loan approval."
+        )
+
+    else:
+
+        st.error("❌ Loan Rejected")
+
+        st.metric(
+            "Confidence",
+            f"{probability[0] * 100:.2f}%"
+        )
+
+        st.warning(
+            "The application does not satisfy the model's approval criteria."
+        )
