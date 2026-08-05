@@ -116,9 +116,13 @@ def loan_application_form():
                 ["Good", "Medium", "Bad"]
             )
 
-        submit = st.form_submit_button(
-            "Predict Loan"
-        )
+        submit = col1, col2, col3 = st.columns([2, 2, 2])
+
+        with col2:
+            submit = st.form_submit_button(
+                "Predict Loan",
+                use_container_width=True
+            )
 
     return submit, {
         "Age": age,

@@ -12,29 +12,52 @@ st.set_page_config(
 
 st.markdown(
     """
-    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css\">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
     .icon-title {
         display: flex;
         align-items: center;
         gap: 0.5rem;
     }
-    .status-icon {
-        margin-right: 0.35rem;
-    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-st.markdown(
-    '<h1 class="icon-title"><i class="fa-solid fa-building-columns"></i> Bank Loan Prediction</h1>',
-    unsafe_allow_html=True
-)
+st.markdown("""
+<style>
+
+
+/* Center the form submit button */
+div[data-testid="stForm"] div[data-testid="stHorizontalBlock"] {
+    justify-content: center;
+}
+
+/* Style the Predict Loan button */
+div[data-testid="stForm"] button[kind="secondaryFormSubmit"] {
+    background: linear-gradient(90deg, #2563eb, #1d4ed8) !important;
+    color: white !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 12px !important;
+    height: 55px !important;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+}
+
+div[data-testid="stForm"] button[kind="secondaryFormSubmit"]:hover {
+    background: linear-gradient(90deg, #1d4ed8, #1e40af) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    cursor: pointer;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 predictor = LoanPredictor()
 preprocessor = LoanPreprocessor()
-
 
 submit, user_data = loan_application_form()
 
@@ -56,10 +79,6 @@ if submit:
         confidence = probability[1]
 
         st.success("Loan Approved")
-        st.markdown(
-            '<p><i class="fa-solid fa-circle-check status-icon" style="color:#16a34a;"></i>Application approved based on model criteria.</p>',
-            unsafe_allow_html=True
-        )
 
         st.metric(
             "Confidence",
@@ -68,10 +87,8 @@ if submit:
 
         st.progress(confidence)
 
-        st.info("The application satisfies the model's criteria for loan approval.")
-        st.markdown(
-            '<p><i class="fa-solid fa-circle-info status-icon" style="color:#2563eb;"></i>Confidence shown above comes from model probability.</p>',
-            unsafe_allow_html=True
+        st.info(
+            "Based on the information provided, the application predicts that the loan is likely to be approved."
         )
 
     else:
@@ -79,10 +96,6 @@ if submit:
         confidence = probability[0]
 
         st.error("Loan Rejected")
-        st.markdown(
-            '<p><i class="fa-solid fa-circle-xmark status-icon" style="color:#dc2626;"></i>Application rejected based on model criteria.</p>',
-            unsafe_allow_html=True
-        )
 
         st.metric(
             "Confidence",
@@ -92,9 +105,9 @@ if submit:
         st.progress(confidence)
 
         st.warning(
-            "The application does not satisfy the model's approval criteria."
+            "Based on the information provided, the application predicts that the loan is likely to be rejected."
         )
-        st.markdown(
-            '<p><i class="fa-solid fa-triangle-exclamation status-icon" style="color:#d97706;"></i>Review applicant details before re-submission.</p>',
-            unsafe_allow_html=True
-        )
+
+    st.caption(
+        "The confidence score indicates how certain the machine learning model is about its prediction."
+    )
